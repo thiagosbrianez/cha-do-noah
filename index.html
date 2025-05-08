@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chá do Noah 💙</title>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://thiagosbrianez.github.io/cha-do-noah/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://unpkg.com/imask"></script>
+</head>
+
+<body>
+
+  <div id="boasVindas">
+    <h2>🎉 Seja bem-vindo ao <br>
+      <span>Chá do Noah</span>!
+    </h2>
+    <p>Clique para entrar nessa celebração com a gente 💙</p>
+    <button id="entrar">Entrar</button>
+  </div>
+
+  <div class="container" data-aos="fade-up">
+    <h1>Chá do Noah 💙</h1>
+    <img src="https://thiagosbrianez.github.io/cha-do-noah/files/img_ultrassom.jpg" alt="Ultrassom do Noah"
+      class="ultrassom">
+
+    <h3 style="text-align: center;">🗓️ 06/07/2025 - 12:00hrs</h3>
+    <h3 style="text-align: center;">📍 A confirmar</h3>
+    <p style="text-align: center;">Estamos muito felizes com a chegada do nosso bebê! Se você recebeu este convite, é
+      porque é muito especial para nós.
+    </p>
+  </div>
+  <div class="container" data-aos="fade-up">
+    <h3>CONFIRMAÇÃO ✅</h3>
+    <p>Confirme sua presença abaixo e venha celebrar esse momento com a gente! </p>
+    <form id="formConvite">
+      <label for="nome">Seu nome:</label>
+      <input type="text" name="nome" required>
+
+      <label for="acompanhantes">Quantidade de acompanhantes:</label>
+      <input type="number" name="acompanhantes" min="0" value="0">
+
+      <label for="telefone">Seu WhatsApp/Celular:</label>
+      <input type="text" name="telefone" id="telefone" required>
+
+      <button type="submit">Confirmar Presença</button>
+    </form>
+  </div>
+  <div class="container" data-aos="fade-up">
+    <h3>SUGESTÃO DE PRESENTES 🎁</h3>
+    <p>
+      • Fralda M ou G 🚼<br>
+      • Mimo à sua escolha 🧸
+    </p>
+  </div>
+  <div class="container" data-aos="fade-up">
+    <h3>OBSERVAÇOES 🍝🍹</h3>
+    <p>Vai ter entrada, almoço e bebidas (água, suco e refrigerante)</p>
+    <p>Ah, e o famoso <strong>open cooler</strong> 🍻 tá liberado! Pode trazer sua gelada se quiser, só não vale
+      esquecer que é chá de bebê, não churrascão de fim de ano! 😄</p>
+  </div>
+
+  <div class="container" data-aos="fade-up">
+    <h2 style="text-align: center; color: #0077cc;">Local do Chá</h2>
+    <iframe src="https://maps.google.com/maps?q=https://maps.app.goo.gl/V5Ly98D8kfPmWnm39&output=embed"></iframe>
+  </div>
+
+  <div class="contador-container" style="margin-top: 20px;">
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <button id="toggleMusicFloating" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  display: none;
+">🔈</button>
+
+  <script>
+    AOS.init();
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzeftPn5me56zfoM-E0L1j_z9AI0h2Bn_S9gdmTFAw43sE-i9nP6guCII7p8p5nzCtm/exec";
+    const form = document.getElementById("formConvite");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new URLSearchParams();
+      formData.append("nome", form.nome.value);
+      formData.append("telefone", form.telefone.value);
+      formData.append("acompanhantes", form.acompanhantes.value);
+      formData.append("secretKey", "noah2025unico");
+
+
+      try {
+        Swal.fire({
+          title: "Enviando confirmação...",
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading()
+        });
+
+        const response = await fetch(scriptURL, {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+        Swal.close();
+
+        if (result.status === "existe") {
+          Swal.fire({
+            title: "Você já confirmou!",
+            text: "Deseja atualizar os dados da sua presença?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Sim, atualizar",
+            cancelButtonText: "Cancelar"
+          }).then(async (res) => {
+            if (res.isConfirmed) {
+              formData.set("update", true);
+              Swal.fire({
+                title: "Atualizando...",
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+              });
+              await fetch(scriptURL, {
+                method: "POST",
+                body: formData
+              });
+              Swal.close();
+              Swal.fire("Presença atualizada com sucesso!", "", "success");
+              form.reset();
+            }
+          });
+        } else {
+          Swal.fire("Presença confirmada!", "Nos vemos lá! 💙", "success");
+          form.reset();
+        }
+      } catch (err) {
+        Swal.close();
+        console.error("Erro:", err);
+        Swal.fire("Erro ao enviar confirmação", "Tente novamente mais tarde.", "error");
+      }
+    });
+
+    const countdown = () => {
+      const evento = new Date("2025-07-06T12:00:00").getTime();
+      const agora = new Date().getTime();
+      const distancia = evento - agora;
+
+      if (distancia < 0) {
+        document.getElementById("contador").innerHTML = "É hoje! 🎉";
+        return;
+      }
+
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      document.getElementById("contador").innerHTML =
+        `Faltam ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
+    };
+
+    setInterval(countdown, 1000);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const celularInput = document.getElementById('telefone');
+      if (celularInput) {
+        IMask(celularInput, {
+          mask: '(00) 00000-0000'
+        });
+      }
+    });
+
+    const audio = new Audio('https://thiagosbrianez.github.io/cha-do-noah/files/msc_ostentacao.mp3');
+    audio.loop = true;
+
+    document.getElementById('entrar').addEventListener('click', () => {
+      audio.play();
+      document.getElementById('boasVindas').style.display = 'none';
+    });
+
+    const toggleBtn = document.getElementById('toggleMusicFloating');
+
+    // Exibe o botão flutuante após o play inicial
+    document.getElementById('entrar').addEventListener('click', () => {
+      toggleBtn.style.display = 'block';
+    });
+
+    // Alternar música ao clicar no botão flutuante
+    toggleBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        toggleBtn.textContent = '🔈';
+      } else {
+        audio.pause();
+        toggleBtn.textContent = '🔇';
+      }
+    });
+
+
+  </script>
+</body>
+
+</html>

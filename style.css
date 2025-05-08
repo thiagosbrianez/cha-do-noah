@@ -1,0 +1,148 @@
+/** INÍCIO ENTRAR */
+#boasVindas {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-family: 'Arial', sans-serif;
+    overflow-y: auto;
+    /* garante rolagem se necessário em telas muito pequenas */
+}
+
+#boasVindas h2 {
+    font-size: clamp(1.8rem, 6vw, 2.2rem);
+    color: #0d47a1;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+#boasVindas h2 span {
+    color: #1565c0;
+}
+
+#boasVindas p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 2rem;
+    max-width: 90%;
+    line-height: 1.5;
+}
+
+#entrar {
+    padding: 14px 28px;
+    font-size: 1rem;
+    background: #0d47a1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: 0.3s;
+    width: 200px;
+    max-width: 90%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(13, 71, 161, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(13, 71, 161, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(13, 71, 161, 0);
+    }
+}
+
+
+/** FIM ENTRAR */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: url('https://thiagosbrianez.github.io/cha-do-noah/files/img_background.jpg') repeat;
+    background-size: 200px;
+    color: #333;
+}
+
+.ultrassom {
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem auto;
+    border-radius: 10px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+h1 {
+    text-align: center;
+    color: #0077cc;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #0077cc;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+.contador-container {
+    background-color: #eaf4ff;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.contador {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #004d99;
+}
+
+iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+    border-radius: 10px;
+}
