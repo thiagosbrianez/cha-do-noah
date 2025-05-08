@@ -39,8 +39,8 @@ Nenhum dado sensível é exposto no front-end ou retornado nas respostas.
 
 ## 💡 Por que esse projeto é especial?
 
-Além de comemorar uma nova vida, esse projeto mostra como é possível usar ferramentas simples e gratuitas para criar soluções funcionais e elegantes — sem precisar de back-end complexo ou infraestrutura paga.
+Além de comemorar uma nova vida, esse projeto mostra como é possível usar ferramentas simples e gratuitas para criar soluções funcionais e elegantes, sem precisar de back-end complexo ou infraestrutura paga.
 
----
+----------------------------------------------------
 
 Se você quiser adaptar esse modelo para seu próprio evento ou outro uso, fique à vontade! 😄
