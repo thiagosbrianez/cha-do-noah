@@ -1,6 +1,7 @@
 # 🎉 Chá do Noah 💙
 
-Este projeto foi desenvolvido para celebrar a chegada do Noah, com um convite virtual interativo, bonito e funcional — tudo utilizando tecnologias gratuitas e acessíveis.
+Este projeto foi desenvolvido para celebrar a chegada do Noah, com um convite virtual interativo, bonito e funcional! 
+Tudo utilizando tecnologias gratuitas e acessíveis.
 
 ## ✨ Sobre o projeto
 
