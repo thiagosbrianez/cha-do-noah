@@ -37,14 +37,14 @@
     <h3>CONFIRMAÇÃO ✅</h3>
     <p>Confirme sua presença abaixo e venha celebrar esse momento com a gente! </p>
     <form id="formConvite">
-      <label for="nome">Seu nome:</label>
+      <label for="telefone">Seu WhatsApp:</label>
+      <input type="text" name="telefone" id="telefone" required>
+
+      <label for="nome">Seu Nome: </label>
       <input type="text" name="nome" required>
 
-      <label for="acompanhantes">Quantidade de acompanhantes:</label>
-      <input type="number" name="acompanhantes" min="0" value="0">
-
-      <label for="telefone">Seu WhatsApp/Celular:</label>
-      <input type="text" name="telefone" id="telefone" required>
+      <label for="acompanhantes">Quantidade de Acompanhantes:</label>
+      <input type="number" name="acompanhantes" min="0" value="0">     
 
       <button type="submit">Confirmar Presença</button>
     </form>
