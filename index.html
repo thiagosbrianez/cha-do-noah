@@ -146,7 +146,7 @@
             }
           });
         } else {
-          Swal.fire("Presença confirmada!", "Nos vemos lá! 💙", "success");
+          Swal.fire("Presença solicitada! Em breve um dos papais vai entrar em contato.", "Nos vemos lá! 💙", "success");
           form.reset();
         }
       } catch (err) {
@@ -188,6 +188,7 @@
 
     const audio = new Audio('https://thiagosbrianez.github.io/cha-do-noah/files/msc_ostentacao.mp3');
     audio.loop = true;
+    audio.volume = 0.5;
 
     document.getElementById('entrar').addEventListener('click', () => {
       audio.play();
