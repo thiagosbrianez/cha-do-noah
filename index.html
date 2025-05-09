@@ -44,7 +44,7 @@
       <input type="text" name="nome" required>
 
       <label for="acompanhantes">Quantidade de Acompanhantes:</label>
-      <input type="number" name="acompanhantes" min="0" value="0">     
+      <input type="number" name="acompanhantes" min="0" value="0">
 
       <button type="submit">Confirmar Presença</button>
     </form>
@@ -146,7 +146,11 @@
             }
           });
         } else {
-          Swal.fire("Presença solicitada! Em breve um dos papais vai entrar em contato.", "Nos vemos lá! 💙", "success");
+          Swal.fire({
+            title: "Presença solicitada!",
+            html: "Em breve um dos papais vai entrar em contato.<br>Nos vemos lá! 💙",
+            icon: "success"
+          });
           form.reset();
         }
       } catch (err) {
