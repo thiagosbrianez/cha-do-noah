@@ -41,7 +41,7 @@
       <input type="text" name="telefone" id="telefone" required>
 
       <label for="nome">Seu Nome: </label>
-      <input type="text" name="nome" required>
+      <input type="text" name="nome" required value="(17) ">
 
       <label for="acompanhantes">Quantidade de Acompanhantes:</label>
       <input type="number" name="acompanhantes" min="0" value="0">
@@ -95,93 +95,103 @@
     const scriptURL = "https://script.google.com/macros/s/AKfycbzeftPn5me56zfoM-E0L1j_z9AI0h2Bn_S9gdmTFAw43sE-i9nP6guCII7p8p5nzCtm/exec";
     const form = document.getElementById("formConvite");
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    document.addEventListener("DOMContentLoaded", function () {
+      const celularInput = document.getElementById('telefone');
+      const form = document.getElementById('formConvite');
 
-      const formData = new URLSearchParams();
-      formData.append("nome", form.nome.value);
-      formData.append("telefone", form.telefone.value);
-      formData.append("acompanhantes", form.acompanhantes.value);
-      formData.append("secretKey", "noah2025unico");
-
-      const nome = form.nome.value.trim();
-
-      // O número completo deve ser 11 dígitos (incluindo o DDD 17)
-      if (telefone.length !== 11) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Telefone inválido',
-          text: 'Digite um número com 9 dígitos após o DDD.'
+      if (celularInput) {
+        IMask(celularInput, {
+          mask: '(00) 00000-0000',
+          lazy: false
         });
-        return;
       }
 
-      // Validação simples de nome
-      if (nome.length < 2 || !/^[A-Za-zÀ-ú\s]+$/.test(nome)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Nome inválido',
-          text: 'Por favor, insira um nome válido.'
-        });
-        return;
-      }
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
+        const telefone = form.telefone.value.replace(/\D/g, '');
+        const nome = form.nome.value.trim();
 
-      try {
-        Swal.fire({
-          title: "Enviando confirmação...",
-          allowOutsideClick: false,
-          didOpen: () => Swal.showLoading()
-        });
-
-        const response = await fetch(scriptURL, {
-          method: "POST",
-          body: formData
-        });
-
-        const result = await response.json();
-        Swal.close();
-
-        if (result.status === "existe") {
+        if (telefone.length !== 11) {
           Swal.fire({
-            title: "Você já confirmou!",
-            text: "Deseja atualizar os dados da sua presença?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Sim, atualizar",
-            cancelButtonText: "Cancelar"
-          }).then(async (res) => {
-            if (res.isConfirmed) {
-              formData.set("update", true);
-              Swal.fire({
-                title: "Atualizando...",
-                allowOutsideClick: false,
-                didOpen: () => Swal.showLoading()
-              });
-              await fetch(scriptURL, {
-                method: "POST",
-                body: formData
-              });
-              Swal.close();
-              Swal.fire("Presença atualizada com sucesso!", "", "success");
-              form.reset();
-            }
+            icon: 'error',
+            title: 'Telefone inválido',
+            text: 'Digite um número com 9 dígitos após o DDD.'
           });
-        } else {
-          Swal.fire({
-            title: "Presença solicitada!",
-            html: "Em breve um dos papais vai entrar em contato.<br>Nos vemos lá! 💙",
-            icon: "success"
-          });
-          form.reset();
+          return;
         }
-      } catch (err) {
-        Swal.close();
-        console.error("Erro:", err);
-        Swal.fire("Erro ao enviar confirmação", "Tente novamente mais tarde.", "error");
-      }
-    });
 
+        if (nome.length < 2 || !/^[A-Za-zÀ-ú\s]+$/.test(nome)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Nome inválido',
+            text: 'Por favor, insira um nome válido.'
+          });
+          return;
+        }
+
+        const formData = new URLSearchParams();
+        formData.append("nome", form.nome.value);
+        formData.append("telefone", form.telefone.value);
+        formData.append("acompanhantes", form.acompanhantes.value);
+        formData.append("secretKey", "noah2025unico");
+
+        try {
+          Swal.fire({
+            title: "Enviando confirmação...",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+          });
+
+          const response = await fetch(scriptURL, {
+            method: "POST",
+            body: formData
+          });
+
+          const result = await response.json();
+          Swal.close();
+
+          if (result.status === "existe") {
+            Swal.fire({
+              title: "Você já confirmou!",
+              text: "Deseja atualizar os dados da sua presença?",
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonText: "Sim, atualizar",
+              cancelButtonText: "Cancelar"
+            }).then(async (res) => {
+              if (res.isConfirmed) {
+                formData.set("update", true);
+                Swal.fire({
+                  title: "Atualizando...",
+                  allowOutsideClick: false,
+                  didOpen: () => Swal.showLoading()
+                });
+                await fetch(scriptURL, {
+                  method: "POST",
+                  body: formData
+                });
+                Swal.close();
+                Swal.fire("Presença atualizada com sucesso!", "", "success");
+                form.reset();
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "Presença solicitada!",
+              html: "Em breve um dos papais vai entrar em contato.<br>Nos vemos lá! 💙",
+              icon: "success"
+            });
+            form.reset();
+          }
+        } catch (err) {
+          Swal.close();
+          console.error("Erro:", err);
+          Swal.fire("Erro ao enviar confirmação", "Tente novamente mais tarde.", "error");
+        }
+      });
+
+    });
     const countdown = () => {
       const evento = new Date("2025-07-06T12:00:00").getTime();
       const agora = new Date().getTime();
@@ -203,16 +213,6 @@
 
     setInterval(countdown, 1000);
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const celularInput = document.getElementById('telefone');
-
-      if (celularInput) {
-        IMask(celularInput, {
-          mask: '(17) 00000-0000'
-        });
-      }
-
-    });
 
     const audio = new Audio('https://thiagosbrianez.github.io/cha-do-noah/files/msc_ostentacao.mp3');
     audio.loop = true;
