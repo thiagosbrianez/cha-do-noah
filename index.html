@@ -104,6 +104,28 @@
       formData.append("acompanhantes", form.acompanhantes.value);
       formData.append("secretKey", "noah2025unico");
 
+      const nome = form.nome.value.trim();
+
+      // O número completo deve ser 11 dígitos (incluindo o DDD 17)
+      if (telefone.length !== 11) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Telefone inválido',
+          text: 'Digite um número com 9 dígitos após o DDD.'
+        });
+        return;
+      }
+
+      // Validação simples de nome
+      if (nome.length < 2 || !/^[A-Za-zÀ-ú\s]+$/.test(nome)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Nome inválido',
+          text: 'Por favor, insira um nome válido.'
+        });
+        return;
+      }
+
 
       try {
         Swal.fire({
@@ -183,11 +205,13 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const celularInput = document.getElementById('telefone');
+
       if (celularInput) {
         IMask(celularInput, {
-          mask: '(00) 00000-0000'
+          mask: '(17) 00000-0000'
         });
       }
+
     });
 
     const audio = new Audio('https://thiagosbrianez.github.io/cha-do-noah/files/msc_ostentacao.mp3');
